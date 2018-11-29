@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private BmobUser user;
     private List<Event> eventList = new ArrayList<>();
+    private EventAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,13 +80,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         emailView.setText(user.getEmail());
 
         initEvents();
-        EventAdapter adapter =new EventAdapter(this, R.layout.event_item, eventList);
-        ListView listView = (ListView) findViewById(R.id.list_event);
-        if (listView==null)
+        if(eventList.size()>0)
+        Log.d("BMOB", eventList.get(0).getTitle());
+        adapter =new EventAdapter(eventList);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list_event);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        if (recyclerView==null)
             Log.d("BMOB","null");
         else
             Log.d("BMOM","lkjlkj");
-        listView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
 
 
     }
@@ -127,6 +135,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_square) {
             initEvents();
+            recreate();
+
         } else if (id == R.id.nav_yours) {
 
         } else if (id == R.id.nav_logout) {
@@ -140,13 +150,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initEvents(){
+        eventList.clear();
         BmobQuery<Event> bmobQuery = new BmobQuery<>();
         bmobQuery.addWhereEqualTo("status", "finding");
         bmobQuery.findObjects(new FindListener<Event>() {
             @Override
             public void done(List<Event> categories, BmobException e) {
                 if (e == null) {
-                    eventList = categories;
+                    for(Event i: categories)
+                        eventList.add(i);
                     Log.d("BMOB", eventList.get(0).getTitle());
                 } else {
                     Log.e("BMOB", e.toString());
