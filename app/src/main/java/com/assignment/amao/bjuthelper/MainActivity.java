@@ -14,31 +14,34 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static cn.bmob.v3.b.From.e;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private BmobUser user;
+    private List<Event> eventList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Bmob.initialize(this,"587cb0becf1d9c8a1fea192b63e98e32");
-        User user = BmobUser.getCurrentUser(User.class);
-
-//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-
-
+        user = BmobUser.getCurrentUser(User.class);
 
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -71,6 +74,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Log.d("BMOB",nameView.getText().toString());
         nameView.setText(user.getUsername());
         emailView.setText(user.getEmail());
+
+        initEvents();
+        EventAdapter adapter =new EventAdapter(this, R.layout.event_item, eventList);
+        ListView listView = (ListView) findViewById(R.id.list_event);
+        if (listView==null)
+            Log.d("BMOB","null");
+        else
+            Log.d("BMOM","lkjlkj");
+        listView.setAdapter(adapter);
+
+
     }
 
     @Override
@@ -111,23 +125,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_square) {
+            initEvents();
+        } else if (id == R.id.nav_yours) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_logout) {
+            user.logOut();
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void initEvents(){
+        BmobQuery<Event> bmobQuery = new BmobQuery<>();
+        bmobQuery.addWhereEqualTo("status", "finding");
+        bmobQuery.findObjects(new FindListener<Event>() {
+            @Override
+            public void done(List<Event> categories, BmobException e) {
+                if (e == null) {
+                    eventList = categories;
+                    Log.d("BMOB", eventList.get(0).getTitle());
+                } else {
+                    Log.e("BMOB", e.toString());
+                }
+            }
+        });
     }
 
 }
