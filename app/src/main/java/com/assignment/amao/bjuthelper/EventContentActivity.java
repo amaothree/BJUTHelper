@@ -1,6 +1,8 @@
 package com.assignment.amao.bjuthelper;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -85,7 +87,7 @@ public class EventContentActivity extends Activity {
         help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Event event = new Event();
+                Event event = new Event();
                 event.setHelper((User) user);
                 event.setHelperId(user.getObjectId());
                 event.setHelperName(user.getUsername());
@@ -104,6 +106,47 @@ public class EventContentActivity extends Activity {
                     }
 
                 });
+            }
+        });
+
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new AlertDialog.Builder(EventContentActivity.this)
+                        .setMessage("DELETE THIS EVENT?")
+                        .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                Event event = new Event();
+                                event.setObjectId(intent.getStringExtra("id"));
+                                event.delete(new UpdateListener() {
+
+                                    @Override
+                                    public void done(BmobException e) {
+                                        if(e==null){
+                                            Toast.makeText(EventContentActivity.this,"Delete Successful",Toast.LENGTH_LONG).show();
+                                            finish();
+                                        }else{
+                                            Toast.makeText(EventContentActivity.this,"Error",Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+
+                                });
+
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                arg0.dismiss();
+                            }
+                        })
+                        .create()
+                        .show();
             }
         });
 
