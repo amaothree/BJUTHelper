@@ -72,24 +72,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         TextView nameView =(TextView) hView.findViewById(R.id.main_name);
         TextView emailView =(TextView) hView.findViewById(R.id.main_email);
-        if(nameView==null)
-            Log.d("BMOB","null");
-        else
-            Log.d("BMOB",nameView.getText().toString());
+        TextView phoneView =(TextView) hView.findViewById(R.id.main_phone);
+
         nameView.setText(user.getUsername());
         emailView.setText(user.getEmail());
+        phoneView.setText(user.getMobilePhoneNumber());
 
         initEvents();
-        if(eventList.size()>0)
-        Log.d("BMOB", eventList.get(0).getTitle());
+
         adapter =new EventAdapter(eventList);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list_event);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        if (recyclerView==null)
-            Log.d("BMOB","null");
-        else
-            Log.d("BMOM","lkjlkj");
         recyclerView.setAdapter(adapter);
 
 
@@ -135,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_square) {
             initEvents();
-            recreate();
+
 
         } else if (id == R.id.nav_yours) {
 
@@ -157,9 +151,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void done(List<Event> categories, BmobException e) {
                 if (e == null) {
-                    for(Event i: categories)
+                    for(Event i: categories){
                         eventList.add(i);
-                    Log.d("BMOB", eventList.get(0).getTitle());
+                        Log.d("BMOB", i.getTitle());
+                    }
                 } else {
                     Log.e("BMOB", e.toString());
                 }
