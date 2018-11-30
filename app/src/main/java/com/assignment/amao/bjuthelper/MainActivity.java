@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView.setAdapter(adapter);
 
         Log.d("list","At the last of oncreate"+eventList.size());
+
     }
 
     @Override
@@ -112,12 +113,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -133,8 +130,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_square) {
             initEvents();
+            setTitle("Event Square");
         } else if (id == R.id.nav_yours) {
             initYourEvents();
+            setTitle("Your Event");
 
         } else if (id == R.id.nav_logout) {
             user.logOut();

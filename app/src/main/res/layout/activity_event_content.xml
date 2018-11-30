@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EventContentActivity">
+
+    <TextView
+        android:id="@+id/content_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:text="Title"/>
+
+    <TextView
+        android:id="@+id/content_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/content_title"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:textStyle="italic"
+        android:textSize="20dp"
+        android:text="Title"/>
+
+    <TextView
+        android:id="@+id/content_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/content_detail"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
+        android:textSize="15sp"
+        android:text="$100"
+        android:textColor="@android:color/holo_red_dark"/>
+
+    <TextView
+        android:id="@+id/content_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/content_money"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="15dp"
+        android:textSize="15sp"
+        android:text="TB4 ROOM-404"
+        android:textColor="@android:color/holo_blue_dark"/>
+
+    <LinearLayout
+        android:id="@+id/content_customer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/content_address"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="Customer:"/>
+
+        <TextView
+            android:id="@+id/content_customer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="name"/>
+
+        <TextView
+            android:id="@+id/content_customer_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="15sp"
+            android:layout_marginLeft="30dp"
+            android:text="15911065116"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/content_helper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/content_customer"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="Helper:"/>
+
+        <TextView
+            android:id="@+id/content_helper_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="name"/>
+
+        <TextView
+            android:id="@+id/content_helper_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="15sp"
+            android:layout_marginLeft="30dp"
+            android:text="13792569630"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/content_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/content_helper"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginTop="50dp">
+
+        <Button
+            android:id="@+id/content_button_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Help"/>
+
+        <Button
+            android:id="@+id/content_button_Tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="Tip"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

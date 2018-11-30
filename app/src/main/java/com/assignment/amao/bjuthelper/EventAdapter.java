@@ -1,6 +1,7 @@
 package com.assignment.amao.bjuthelper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,19 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             mContext = parent.getContext();
         }
         View view = LayoutInflater.from(mContext).inflate(R.layout.event_item,parent,false);
-        return new ViewHolder(view);
+        final ViewHolder holder =new ViewHolder(view);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Event event = mEventlist.get(holder.getAdapterPosition());
+                Intent intent = new Intent(mContext,EventContentActivity.class);
+                intent.putExtra("id",event.getObjectId());
+                mContext.startActivity(intent);
+            }
+        });
+
+        return holder;
     }
 
     @Override
