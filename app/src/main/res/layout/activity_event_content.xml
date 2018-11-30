@@ -76,7 +76,7 @@
             android:text="name"/>
 
         <TextView
-            android:id="@+id/content_customer_room"
+            android:id="@+id/content_customer_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -113,7 +113,7 @@
             android:text="name"/>
 
         <TextView
-            android:id="@+id/content_helper_room"
+            android:id="@+id/content_helper_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
