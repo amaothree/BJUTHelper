@@ -151,7 +151,26 @@ public class EventContentActivity extends Activity {
         });
 
 
+        tip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Event event = new Event();
+                event.setStatus("done");
+                event.update(intent.getStringExtra("id"), new UpdateListener() {
 
+                    @Override
+                    public void done(BmobException e) {
+                        if(e==null){
+                            Toast.makeText(EventContentActivity.this,"Task Finish, Enjoy!",Toast.LENGTH_LONG).show();
+                            finish();
+                        }else{
+//                            toast("更新失败：" + e.getMessage());
+                        }
+                    }
+
+                });
+            }
+        });
 
     }
 

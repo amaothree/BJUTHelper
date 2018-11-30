@@ -57,8 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
                 MyDialog myDialog = new MyDialog(MainActivity.this, R.style.MyDialogStyle,user);
                 myDialog.show();
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                initEvents();
             }
         });
 
@@ -127,6 +126,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_logout) {
             user.logOut();
             finish();
+        } else if (id == R.id.nav_tasks) {
+            initYourTasks();
+            setTitle("Processing Tasks");
+
+        } else if (id == R.id.nav_history){
+            initYourTasksHistory();
+            setTitle("Tasks History");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -138,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         eventList.clear();
         BmobQuery<Event> bmobQuery = new BmobQuery<>();
         bmobQuery.addWhereEqualTo("status", "finding");
+        bmobQuery.order("-createdAt");
         bmobQuery.findObjects(new FindListener<Event>() {
             @Override
             public void done(List<Event> categories, BmobException e) {
@@ -145,8 +152,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     for(Event i: categories){
                         eventList.add(i);
                         Log.d("BMOB", i.getTitle());
-                        adapter.notifyDataSetChanged();
                     }
+                    adapter.notifyDataSetChanged();
                 } else {
                     Log.e("BMOB", e.toString());
                 }
@@ -159,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         eventList.clear();
         BmobQuery<Event> bmobQuery = new BmobQuery<>();
         bmobQuery.addWhereEqualTo("customerId", user.getObjectId());
+        bmobQuery.order("-createdAt");
         bmobQuery.findObjects(new FindListener<Event>() {
             @Override
             public void done(List<Event> categories, BmobException e) {
@@ -166,8 +174,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     for(Event i: categories){
                         eventList.add(i);
                         Log.d("BMOB", i.getTitle());
-                        adapter.notifyDataSetChanged();
                     }
+                    adapter.notifyDataSetChanged();
                 } else {
                     Log.e("BMOB", e.toString());
                 }
@@ -175,5 +183,51 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
         Log.d("list","At the last of init"+eventList.size());
     }
+
+    private void initYourTasks(){
+        eventList.clear();
+        BmobQuery<Event> bmobQuery = new BmobQuery<>();
+        bmobQuery.addWhereEqualTo("helperId", user.getObjectId());
+        bmobQuery.addWhereEqualTo("status", "processing");
+        bmobQuery.order("-createdAt");
+        bmobQuery.findObjects(new FindListener<Event>() {
+            @Override
+            public void done(List<Event> categories, BmobException e) {
+                if (e == null) {
+                    for(Event i: categories){
+                        eventList.add(i);
+                        Log.d("BMOB", i.getTitle());
+                    }
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Log.e("BMOB", e.toString());
+                }
+            }
+        });
+        Log.d("list","At the last of init"+eventList.size());
+    }
+
+    private void initYourTasksHistory(){
+        eventList.clear();
+        BmobQuery<Event> bmobQuery = new BmobQuery<>();
+        bmobQuery.addWhereEqualTo("helperId", user.getObjectId());
+        bmobQuery.order("-createdAt");
+        bmobQuery.findObjects(new FindListener<Event>() {
+            @Override
+            public void done(List<Event> categories, BmobException e) {
+                if (e == null) {
+                    for(Event i: categories){
+                        eventList.add(i);
+                        Log.d("BMOB", i.getTitle());
+                    }
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Log.e("BMOB", e.toString());
+                }
+            }
+        });
+        Log.d("list","At the last of init"+eventList.size());
+    }
+
 
 }

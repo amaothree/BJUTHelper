@@ -13,6 +13,16 @@
             android:icon="@mipmap/baseline_person_black_48"
             android:title="Your Events" />
 
+        <item
+            android:id="@+id/nav_tasks"
+            android:icon="@mipmap/baseline_work_black_48dp"
+            android:title="Processing Tasks" />
+
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@mipmap/baseline_today_black_48dp"
+            android:title="Task History" />
+
     </group>
 
     <item android:title="Account">
