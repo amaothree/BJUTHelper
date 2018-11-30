@@ -7,19 +7,23 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 public class EventContentActivity extends Activity {
 
     TextView title, detail, money, address, customer_name, customer_phone, helper_name, helper_phone;
     BmobUser user;
-    Button help, tip;
+    Button help, tip, delete;
     Intent intent;
+    LinearLayout helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,8 @@ public class EventContentActivity extends Activity {
         helper_phone = (TextView) findViewById(R.id.content_helper_phone);
         help = (Button) findViewById(R.id.content_button_help);
         tip = (Button) findViewById(R.id.content_button_Tip);
+        delete = (Button) findViewById(R.id.content_button_del);
+        helper = (LinearLayout) findViewById(R.id.content_helper);
 
         user = BmobUser.getCurrentUser(User.class);
         Log.d("BMOB",user.getUsername());
@@ -44,13 +50,62 @@ public class EventContentActivity extends Activity {
         intent = getIntent();
         getEvent(intent.getStringExtra("id"));
         getCustomer(intent.getStringExtra("cid"));
-        if(!(intent.getStringExtra("status").equals("finding"))) {
-            getHelper(intent.getStringExtra("hid"));
-            (findViewById(R.id.content_helper)).setVisibility(View.VISIBLE);
-        }
-        if(user.getObjectId().equals(intent.getStringExtra("cid")))
-            tip.setVisibility(View.VISIBLE);
 
+        Boolean isCustomer = user.getObjectId().equals(intent.getStringExtra("cid"));
+        String status = intent.getStringExtra("status");
+
+        switch (status){
+            case "finding":{
+                if(isCustomer){
+                    delete.setVisibility(View.VISIBLE);
+                }else {
+                    help.setVisibility(View.VISIBLE);
+                }
+                break;
+            }
+            case "processing":{
+                helper.setVisibility(View.VISIBLE);
+                if(isCustomer){
+                    tip.setVisibility(View.VISIBLE);
+                }else {
+                    help.setVisibility(View.VISIBLE);
+                }
+                break;
+            }
+            case "done":{
+                helper.setVisibility(View.VISIBLE);
+                break;
+            }
+            default:
+                break;
+        }
+
+
+
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Event event = new Event();
+                event.setHelper((User) user);
+                event.setHelperId(user.getObjectId());
+                event.setHelperName(user.getUsername());
+                event.setHelperPhone(user.getMobilePhoneNumber());
+                event.setStatus("processing");
+                event.update(intent.getStringExtra("id"), new UpdateListener() {
+
+                    @Override
+                    public void done(BmobException e) {
+                        if(e==null){
+                            Toast.makeText(EventContentActivity.this,"Every Helper all are Beautiful",Toast.LENGTH_LONG).show();
+                            finish();
+                        }else{
+//                            toast("更新失败：" + e.getMessage());
+                        }
+                    }
+
+                });
+            }
+        });
 
 
 

@@ -19,6 +19,10 @@ public class Event extends BmobObject {
     private User customer;
     private User helper;
 
+    public Event(){
+
+    }
+
     public Event(String title, String detail, int money, String address, String status, BmobUser customer) {
         this.title = title;
         this.detail = detail;
@@ -93,5 +97,9 @@ public class Event extends BmobObject {
 
     public void setHelper(User helper) {
         this.helper = helper;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

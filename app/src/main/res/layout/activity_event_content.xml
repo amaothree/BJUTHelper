@@ -138,7 +138,8 @@
             android:id="@+id/content_button_help"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Help"/>
+            android:text="Help"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/content_button_Tip"
@@ -146,6 +147,14 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:text="Tip"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/content_button_del"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="Delete"
             android:visibility="gone"/>
 
     </LinearLayout>
