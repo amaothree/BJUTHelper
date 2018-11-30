@@ -283,7 +283,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            final boolean[] auth = {false};
             // TODO: attempt authentication against a network service.
 
             try {
@@ -293,39 +292,41 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-            BmobQuery<User> user = new BmobQuery<User>();
-            user.addWhereEqualTo("email", mEmail);
-            user.findObjects(new FindListener<User>() {
-                @Override
-                public void done(List<User> list, BmobException e) {
-                    if(e==null){
-                        User u = list.get(0);
-                        auth[0] = loginByAccount(u.getUsername(),mPassword);
-                    }else{
-                        Log.d("BMOB","New User");
-                        Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
-                        intent.putExtra("email",mEmail);
-                        startActivity(intent);
-
-                    }
-                }
-            });
+//            BmobQuery<User> user = new BmobQuery<User>();
+//            user.addWhereEqualTo("email", mEmail);
+//            user.findObjects(new FindListener<User>() {
+//                @Override
+//                public void done(List<User> list, BmobException e) {
+//                    if(e==null){
+//                        User u = list.get(0);
+//                        auth[0] =
+//                    }else{
+//                        Log.d("BMOB","New User");
+//                        Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+//                        intent.putExtra("email",mEmail);
+//                        startActivity(intent);
+//
+//                    }
+//                }
+//            });
 
             // TODO: register the new account here.
-            return auth[0];
+            return loginByAccount(mEmail,mPassword);
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
+        protected void onPostExecute(Boolean success) {
+//            mAuthTask = null;
+//            showProgress(false);
+
+            success = (mProgressView.getVisibility()==View.GONE);
+
 
             if (success) {
                 finish();
-                LoginActivity.this.onDestroy();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+//                mPasswordView.setError(getString(R.string.error_incorrect_password));
+//                mPasswordView.requestFocus();
             }
         }
 
@@ -345,12 +346,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             public void done(User user, BmobException e) {
                 if (e == null) {
                     Toast.makeText(context,"Welcome",Toast.LENGTH_SHORT).show();
+                    mAuthTask = null;
+                    showProgress(false);
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     startActivity(intent);
-                    auth[0] = true;
                 } else {
-                    Log.d("BMOB","Wrong Pass");
-                    auth[0] = false;
+                    mAuthTask = null;
+                    showProgress(false);
+                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                    mPasswordView.requestFocus();
                 }
             }
         });

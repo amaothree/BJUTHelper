@@ -93,7 +93,8 @@
         android:layout_below="@+id/content_customer"
         android:layout_centerInParent="true"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="invisible">
 
         <TextView
             android:layout_width="wrap_content"
@@ -144,7 +145,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:text="Tip"/>
+            android:text="Tip"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

@@ -46,10 +46,10 @@ public class EventContentActivity extends Activity {
         getCustomer(intent.getStringExtra("cid"));
         if(!(intent.getStringExtra("status").equals("finding"))) {
             getHelper(intent.getStringExtra("hid"));
-            (findViewById(R.id.content_helper)).setVisibility(View.INVISIBLE);
+            (findViewById(R.id.content_helper)).setVisibility(View.VISIBLE);
         }
         if(user.getObjectId().equals(intent.getStringExtra("cid")))
-            help.setVisibility(View.INVISIBLE);
+            tip.setVisibility(View.VISIBLE);
 
 
 
