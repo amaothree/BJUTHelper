@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BmobUser user;
     private List<Event> eventList = new ArrayList<>();
     private EventAdapter adapter;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,12 +85,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initEvents();
 
         adapter =new EventAdapter(eventList);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list_event);
+        recyclerView = (RecyclerView) findViewById(R.id.list_event);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-
+        Log.d("list","At the last of oncreate"+eventList.size());
     }
 
     @Override
@@ -132,9 +133,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_square) {
             initEvents();
-
-
         } else if (id == R.id.nav_yours) {
+            initYourEvents();
 
         } else if (id == R.id.nav_logout) {
             user.logOut();
@@ -157,12 +157,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     for(Event i: categories){
                         eventList.add(i);
                         Log.d("BMOB", i.getTitle());
+                        adapter.notifyDataSetChanged();
                     }
                 } else {
                     Log.e("BMOB", e.toString());
                 }
             }
         });
+        Log.d("list","At the last of init"+eventList.size());
+    }
+
+    private void initYourEvents(){
+        eventList.clear();
+        BmobQuery<Event> bmobQuery = new BmobQuery<>();
+        bmobQuery.addWhereEqualTo("customerId", user.getObjectId());
+        bmobQuery.findObjects(new FindListener<Event>() {
+            @Override
+            public void done(List<Event> categories, BmobException e) {
+                if (e == null) {
+                    for(Event i: categories){
+                        eventList.add(i);
+                        Log.d("BMOB", i.getTitle());
+                        adapter.notifyDataSetChanged();
+                    }
+                } else {
+                    Log.e("BMOB", e.toString());
+                }
+            }
+        });
+        Log.d("list","At the last of init"+eventList.size());
     }
 
 }

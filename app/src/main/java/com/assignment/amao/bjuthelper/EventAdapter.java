@@ -19,6 +19,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         TextView name;
         TextView money;
         TextView address;
+        TextView status;
 
         public ViewHolder(View view){
             super(view);
@@ -26,11 +27,17 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             name = (TextView) view.findViewById(R.id.item_user);
             money = (TextView) view.findViewById(R.id.item_money);
             address = (TextView) view.findViewById(R.id.item_address);
+            status = (TextView) view.findViewById(R.id.item_status);
         }
     }
 
    public EventAdapter(List<Event> eventList){
         mEventlist =eventList;
+   }
+
+   public void updateList(List<Event> eventList){
+       mEventlist.clear();
+       mEventlist.addAll(eventList);
    }
 
     @Override
@@ -49,6 +56,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         holder.address.setText(event.getAddress());
         holder.title.setText(event.getTitle());
         holder.money.setText("￥"+event.getMoney());
+        holder.status.setText(event.getStatus());
     }
 
     @Override

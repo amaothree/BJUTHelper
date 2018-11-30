@@ -40,6 +40,13 @@
 			android:layout_height="wrap_content"
 			android:layout_marginLeft="30dp"
 			android:text="address"/>
+
+		<TextView
+			android:id="@+id/item_status"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="30dp"
+			android:text="status"/>
 	</LinearLayout>
 
     
