@@ -22,4 +22,9 @@
     <string name="username">Username</string>
     <string name="phoneNumber">Phone Number</string>
     <string name="action_refresh">Refresh</string>
+    <string name="event_title">Title</string>
+    <string name="event_address">Address</string>
+    <string name="event_money">Tip</string>
+    <string name="event_detail">Detail</string>
+    <string name="submit">Submit</string>
 </resources>

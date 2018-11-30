@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Bmob.initialize(this,"587cb0becf1d9c8a1fea192b63e98e32");
         user = BmobUser.getCurrentUser(User.class);
 
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MyDialog myDialog = new MyDialog(MainActivity.this, R.style.MyDialogStyle,user);
+                myDialog.show();
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }

@@ -19,23 +19,18 @@ public class Event extends BmobObject {
     private User customer;
     private User helper;
 
-    public Event(String title, String detail, int money, String address, String status, String customerId, String helperId) {
+    public Event(String title, String detail, int money, String address, String status, BmobUser customer) {
         this.title = title;
         this.detail = detail;
         this.money = money;
         this.address = address;
         this.status = status;
-        this.customerId = customerId;
-        this.helperId = helperId;
+        this.customer =(User) customer;
 
-        customer = (User) BmobUser.getObjectByKey(customerId);
-        helper = (User) BmobUser.getObjectByKey(helperId);
-
+        customerId = customer.getObjectId();
         customerName = customer.getUsername();
         customerPhone = customer.getMobilePhoneNumber();
 
-        helperName = helper.getUsername();
-        helperPhone = helper.getMobilePhoneNumber();
 
     }
 
@@ -81,5 +76,22 @@ public class Event extends BmobObject {
 
     public String getHelperPhone() {
         return helperPhone;
+    }
+
+
+    public void setHelperId(String helperId) {
+        this.helperId = helperId;
+    }
+
+    public void setHelperName(String helperName) {
+        this.helperName = helperName;
+    }
+
+    public void setHelperPhone(String helperPhone) {
+        this.helperPhone = helperPhone;
+    }
+
+    public void setHelper(User helper) {
+        this.helper = helper;
     }
 }
