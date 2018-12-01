@@ -136,6 +136,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_history){
             initYourTasksHistory();
             setTitle("Tasks History");
+        } else if (id == R.id.nav_password){
+            Intent passIntent = new Intent(MainActivity.this,PasswordActivity.class);
+            startActivity(passIntent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

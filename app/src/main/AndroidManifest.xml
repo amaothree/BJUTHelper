@@ -31,12 +31,15 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/title_activity_register"></activity>
+            android:label="@string/title_activity_register" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".EventContentActivity"></activity>
+        <activity android:name=".EventContentActivity" />
+        <activity
+            android:name=".PasswordActivity"
+            android:label="@string/title_activity_password"></activity>
     </application>
 
 </manifest>
