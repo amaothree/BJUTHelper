@@ -95,7 +95,7 @@ public class Event extends BmobObject {
         this.helperPhone = helperPhone;
     }
 
-    public void setHelper(User helper) {
+    public void setHelper(BmobUser helper) {
         this.helper = helper;
     }
 

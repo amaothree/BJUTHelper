@@ -15,7 +15,7 @@ import java.util.List;
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 
     private Context mContext;
-    private static BmobUser user = BmobUser.getCurrentUser();
+    private static BmobUser user;
     private List<Event> mEventlist;
 
     static class  ViewHolder extends RecyclerView.ViewHolder{
@@ -35,8 +35,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         }
     }
 
-   public EventAdapter(List<Event> eventList){
+   public EventAdapter(List<Event> eventList,BmobUser user){
         mEventlist =eventList;
+        this.user=user;
    }
 
    public void updateList(List<Event> eventList){

@@ -25,7 +25,7 @@ import java.net.URISyntaxException;
 public class EventContentActivity extends Activity {
 
     TextView title, detail, money, address, customer_name, customer_phone, helper_name, helper_phone;
-    final static BmobUser user= BmobUser.getCurrentUser();
+    private static BmobUser user = BmobUser.getCurrentUser();
     Button help, tip, delete;
     Intent intent;
     LinearLayout helper;
@@ -101,7 +101,7 @@ public class EventContentActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Event event = new Event();
-                event.setHelper((User) user);
+                event.setHelper(user);
                 event.setHelperId(user.getObjectId());
                 event.setHelperName(user.getUsername());
                 event.setHelperPhone(user.getMobilePhoneNumber());

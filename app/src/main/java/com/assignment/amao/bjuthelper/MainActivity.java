@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initEvents();
 
-        adapter =new EventAdapter(eventList);
+        adapter =new EventAdapter(eventList,user);
         recyclerView = (RecyclerView) findViewById(R.id.list_event);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
