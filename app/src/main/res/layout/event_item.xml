@@ -12,6 +12,10 @@
 	    android:layout_height="wrap_content"
 	   	android:layout_marginLeft="20dp"
 	    android:text="Title"
+		android:singleLine="true"
+		android:focusable="true"
+		android:ellipsize="marquee"
+		android:marqueeRepeatLimit="marquee_forever"
 		android:textSize="25sp"
 		android:textStyle="bold"/>
 

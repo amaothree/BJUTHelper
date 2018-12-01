@@ -269,34 +269,31 @@ public class PasswordActivity extends AppCompatActivity implements LoaderCallbac
                 return false;
             }
 
-            BmobUser.updateCurrentUserPassword(mEmail, mPassword, new UpdateListener() {
-                @Override
-                public void done(BmobException e) {
-                    if (e == null) {
-                        Toast.makeText(PasswordActivity.this,"Change Successful",Toast.LENGTH_SHORT).show();
-                        finish();
-//                        Snackbar.make(view, "查询成功", Snackbar.LENGTH_LONG).show();
-                    } else {
-                        mAuthTask = null;
-                        showProgress(false);
-                        mEmailView.setError(getString(R.string.error_incorrect_password));
-                        mEmailView.requestFocus();
-                    }
-                }
-            });
-
-            // TODO: register the new account here.
             return true;
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
+            mAuthTask = null;
+            showProgress(false);
 
 
-            if (success) {
-                finish();
-            } else {
-            }
+                BmobUser.updateCurrentUserPassword(mEmail, mPassword, new UpdateListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if (e == null) {
+                            Toast.makeText(PasswordActivity.this,"Change Successful",Toast.LENGTH_SHORT).show();
+                            finish();
+//                        Snackbar.make(view, "查询成功", Snackbar.LENGTH_LONG).show();
+                        } else {
+                            mAuthTask = null;
+                            showProgress(false);
+                            mEmailView.setError(getString(R.string.error_incorrect_password));
+                            mEmailView.requestFocus();
+                        }
+                    }
+                });
+
         }
 
         @Override
