@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MyDialog myDialog = new MyDialog(MainActivity.this, R.style.MyDialogStyle,BmobUser.getCurrentUser());
+                MyDialog myDialog = new MyDialog(MainActivity.this, R.style.MyDialogStyle,user);
                 myDialog.show();
                 initEvents();
             }
