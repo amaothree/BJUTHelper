@@ -292,23 +292,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-//            BmobQuery<User> user = new BmobQuery<User>();
-//            user.addWhereEqualTo("email", mEmail);
-//            user.findObjects(new FindListener<User>() {
-//                @Override
-//                public void done(List<User> list, BmobException e) {
-//                    if(e==null){
-//                        User u = list.get(0);
-//                        auth[0] =
-//                    }else{
-//                        Log.d("BMOB","New User");
-//                        Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
-//                        intent.putExtra("email",mEmail);
-//                        startActivity(intent);
-//
-//                    }
-//                }
-//            });
+            BmobQuery<User> user = new BmobQuery<User>();
+            user.addWhereEqualTo("email", mEmail);
+            user.findObjects(new FindListener<User>() {
+                @Override
+                public void done(List<User> list, BmobException e) {
+                    if(e==null){
+                        User u = list.get(0);
+                    }else{
+                        Log.d("BMOB","New User");
+                        Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                        intent.putExtra("email",mEmail);
+                        startActivity(intent);
+
+                    }
+                }
+            });
 
             // TODO: register the new account here.
             return loginByAccount(mEmail,mPassword);
@@ -348,6 +347,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     Toast.makeText(context,"Welcome",Toast.LENGTH_SHORT).show();
                     mAuthTask = null;
                     showProgress(false);
+                    BmobUser bombuser = BmobUser.getCurrentUser();
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     startActivity(intent);
                 } else {

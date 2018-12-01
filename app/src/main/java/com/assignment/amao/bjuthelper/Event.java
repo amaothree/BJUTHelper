@@ -16,8 +16,8 @@ public class Event extends BmobObject {
     private String customerPhone;
     private String helperPhone;
 
-    private User customer;
-    private User helper;
+    private BmobUser customer;
+    private BmobUser helper;
 
     public Event(){
 
@@ -29,7 +29,7 @@ public class Event extends BmobObject {
         this.money = money;
         this.address = address;
         this.status = status;
-        this.customer =(User) customer;
+        this.customer = customer;
 
         customerId = customer.getObjectId();
         customerName = customer.getUsername();

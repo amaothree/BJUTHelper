@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         Bmob.initialize(this,"587cb0becf1d9c8a1fea192b63e98e32");
-        user = BmobUser.getCurrentUser(User.class);
+        user = BmobUser.getCurrentUser();
 
         setContentView(R.layout.activity_main);
 
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MyDialog myDialog = new MyDialog(MainActivity.this, R.style.MyDialogStyle,user);
+                MyDialog myDialog = new MyDialog(MainActivity.this, R.style.MyDialogStyle,BmobUser.getCurrentUser());
                 myDialog.show();
                 initEvents();
             }
@@ -91,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Log.d("list","At the last of oncreate"+eventList.size());
 
+
+
     }
 
     @Override
@@ -124,7 +126,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             setTitle("Your Event");
 
         } else if (id == R.id.nav_logout) {
-            user.logOut();
+            BmobUser.logOut();
+            BmobUser currentUser = BmobUser.getCurrentUser();
             finish();
         } else if (id == R.id.nav_tasks) {
             initYourTasks();
@@ -230,4 +233,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    @Override
+    protected void onDestroy() {
+        BmobUser.logOut();
+        BmobUser currentUser = BmobUser.getCurrentUser();
+        super.onDestroy();
+    }
 }

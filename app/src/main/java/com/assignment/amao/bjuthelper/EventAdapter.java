@@ -3,16 +3,19 @@ package com.assignment.amao.bjuthelper;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import cn.bmob.v3.BmobUser;
+
 import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 
     private Context mContext;
-
+    private static BmobUser user = BmobUser.getCurrentUser();
     private List<Event> mEventlist;
 
     static class  ViewHolder extends RecyclerView.ViewHolder{
@@ -57,8 +60,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
                 intent.putExtra("id",event.getObjectId());
                 intent.putExtra("hid",event.getHelperId());
                 intent.putExtra("cid",event.getCustomerId());
+                intent.putExtra("uid", user.getObjectId());
                 intent.putExtra("status",event.getStatus());
                 mContext.startActivity(intent);
+
             }
         });
 

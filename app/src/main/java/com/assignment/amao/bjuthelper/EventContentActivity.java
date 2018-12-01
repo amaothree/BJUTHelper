@@ -1,5 +1,6 @@
 package com.assignment.amao.bjuthelper;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -19,10 +20,12 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.UpdateListener;
 
+import java.net.URISyntaxException;
+
 public class EventContentActivity extends Activity {
 
     TextView title, detail, money, address, customer_name, customer_phone, helper_name, helper_phone;
-    BmobUser user;
+    final static BmobUser user= BmobUser.getCurrentUser();
     Button help, tip, delete;
     Intent intent;
     LinearLayout helper;
@@ -46,16 +49,23 @@ public class EventContentActivity extends Activity {
         delete = (Button) findViewById(R.id.content_button_del);
         helper = (LinearLayout) findViewById(R.id.content_helper);
 
-        user = BmobUser.getCurrentUser(User.class);
-        Log.d("BMOB",user.getUsername());
+
 
         intent = getIntent();
+        user.setObjectId(intent.getStringExtra("uid"));
+        Log.d("BMOB",user.getUsername());
+        Boolean isCustomer = (user.getObjectId()).equals(intent.getStringExtra("cid"));
+        Log.d("BMOB",user.getObjectId()+"<>"+intent.getStringExtra("cid"));
+
         getEvent(intent.getStringExtra("id"));
         getCustomer(intent.getStringExtra("cid"));
-
-        Boolean isCustomer = user.getObjectId().equals(intent.getStringExtra("cid"));
         String status = intent.getStringExtra("status");
 
+        Log.d("BMOB",isCustomer.toString());
+
+        delete.setVisibility(View.GONE);
+        help.setVisibility(View.GONE);
+        tip.setVisibility(View.GONE);
         switch (status){
             case "finding":{
                 if(isCustomer){
@@ -66,19 +76,22 @@ public class EventContentActivity extends Activity {
                 break;
             }
             case "processing":{
+                getHelper(intent.getStringExtra("hid"));
                 helper.setVisibility(View.VISIBLE);
                 if(isCustomer){
                     tip.setVisibility(View.VISIBLE);
-                }else {
-                    help.setVisibility(View.VISIBLE);
                 }
                 break;
             }
             case "done":{
+                getHelper(intent.getStringExtra("hid"));
                 helper.setVisibility(View.VISIBLE);
                 break;
             }
             default:
+                delete.setVisibility(View.GONE);
+                help.setVisibility(View.GONE);
+                tip.setVisibility(View.GONE);
                 break;
         }
 
@@ -152,23 +165,35 @@ public class EventContentActivity extends Activity {
 
 
         tip.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("WrongConstant")
             @Override
             public void onClick(View v) {
                 Event event = new Event();
                 event.setStatus("done");
-                event.update(intent.getStringExtra("id"), new UpdateListener() {
+                String urlCode="FKX07818CPBEQS4KKLUO5A";
+                Intent intentpay= null;
+                try {
+                    event.update(intent.getStringExtra("id"), new UpdateListener() {
 
-                    @Override
-                    public void done(BmobException e) {
-                        if(e==null){
-                            Toast.makeText(EventContentActivity.this,"Task Finish, Enjoy!",Toast.LENGTH_LONG).show();
-                            finish();
-                        }else{
+                        @Override
+                        public void done(BmobException e) {
+                            if(e==null){
+                                Toast.makeText(EventContentActivity.this,"Task Finish, Enjoy!",Toast.LENGTH_LONG).show();
+                                finish();
+                            }else{
 //                            toast("更新失败：" + e.getMessage());
+                            }
                         }
-                    }
 
-                });
+                    });
+                    intentpay = Intent.parseUri("intent://platformapi/startapp?saId=10000007&clientVersion=3.7.0.0718&qrcode=https%3A%2F%2Fqr.alipay.com%2F{urlCode}%3F_s%3Dweb-other&_t=1472443966571#Intent;scheme=alipayqr;package=com.eg.android.AlipayGphone;end".replace("{urlCode}", urlCode),1);
+                    startActivity(intentpay);
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                    Toast.makeText(EventContentActivity.this,"No Pay No Gain",Toast.LENGTH_LONG).show();
+                }
+
+
             }
         });
 
